@@ -1,7 +1,7 @@
 # Welcome to nostr-key-generator
 
 ## Description
-The best Nostr keys generator, we aim to include various adapters (e.g. CLI, http, web, etc).
+A simple and extensible Nostr key generator
 
 ## Features
 - A command line interface for generating Nostr keys
