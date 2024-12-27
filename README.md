@@ -15,7 +15,7 @@ npm i
 npm run generate-nostr-keys
 ```
 
-By default the keys will be printed to the console, if you want the command to print the keys as JSON try the command below.
+By default the keys will be printed to the console, if you want them as JSON try the command below:
 
 ```bash
 npm run generate-nostr-keys -- --output json
