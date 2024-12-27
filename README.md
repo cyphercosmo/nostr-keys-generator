@@ -6,14 +6,30 @@ A simple and extensible Nostr key generator
 ## Features
 - A command line interface for generating Nostr keys
 
-## Installation
+## Installation & usage
+
+### Local
 
 ```bash
 npm i
+npm run generate-nostr-keys
 ```
 
-## Usage
+By default the keys will be printed to the console, if you want the command to print the keys as JSON try the command below.
 
 ```bash
-npm run generate-nostr-keys
+npm run generate-nostr-keys -- --output json
+```
+
+### Global
+
+```bash
+npm i -g
+nostr-key-generator
+```
+
+By default the keys will be printed to the console, if you want the command to print the keys as JSON try the command below.
+
+```bash
+nostr-key-generator --output json
 ```

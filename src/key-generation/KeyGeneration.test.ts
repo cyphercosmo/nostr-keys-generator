@@ -1,7 +1,7 @@
 import { KeyGenerationService } from './KeyGeneration.service';
 import { NostrKey } from '../NostrKey';
 
-describe('KeyGeneratorService', () => {
+describe('key generation', () => {
     let keyGeneratorService: KeyGenerationService;
 
     beforeEach(() => {
