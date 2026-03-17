@@ -1,43 +1,50 @@
 #!/usr/bin/env node
 
-import { Command, Option } from 'commander';
-import chalk from 'chalk';
 import { KeyGenerationService } from './KeyGeneration.service.js'
 import { NostrKey } from '../NostrKey.js';
 
-const program = new Command();
+declare const process: {
+  argv: string[];
+  exit(code?: number): never;
+};
 
 const printKeys = (keys: NostrKey) => {
-  console.log(chalk.bold.green('These are your keys to the Nostr network:'));
+  console.log('These are your keys to the Nostr network:');
 
   console.log(`
-    ${chalk.white.bgGreen('Public Key:')} ${keys.publicKey}
-    ${chalk.white.bgYellow('Private Key:')} ${keys.privateKey}
+    Public Key: ${keys.publicKey}
+    Private Key: ${keys.privateKey}
   `)
 
-  console.log(chalk.bold.red('These keys are used to identify you on the Nostr network, anyone who gains access to them can impersonate you. If you lose them, you will not be able to access your Nostr account ever again.'));
+  console.log('These keys are used to identify you on the Nostr network, anyone who gains access to them can impersonate you.\nIf you lose them, you will not be able to access your Nostr account ever again.');
 }
 
 const printJson = (object: any) => {
   console.log(JSON.stringify(object, null, 4))
 }
 
-program
-  .addOption(new Option('-o, --output <format>', 'the type of output produced (e.g.: terminal, json').choices(['terminal', 'json']).default('terminal'))
-  .action((options) => {
-    const keyGenerationService = new KeyGenerationService();
-    const keys = keyGenerationService.generateKeys(); 
+const parseOutputFormat = (argv: string[]): 'terminal' | 'json' => {
+  const outputIndex = argv.findIndex((arg) => arg === '--output' || arg === '-o');
+  if (outputIndex === -1) {
+    return 'terminal';
+  }
 
-    switch (options.output) {
-      case 'terminal':
-        printKeys(keys);
-        break;
-      case 'json':
-        printJson(keys);
-      default:
-        break;
-    }
-  });
+  const value = argv[outputIndex + 1];
+  if (value === 'terminal' || value === 'json') {
+    return value;
+  }
 
-program.parse();
+  console.error('Invalid output format. Use --output terminal or --output json.');
+  process.exit(1);
+};
+
+const output = parseOutputFormat(process.argv.slice(2));
+const keyGenerationService = new KeyGenerationService();
+const keys = keyGenerationService.generateKeys();
+
+if (output === 'json') {
+  printJson(keys);
+} else {
+  printKeys(keys);
+}
   

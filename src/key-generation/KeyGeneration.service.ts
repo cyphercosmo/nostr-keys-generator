@@ -1,7 +1,11 @@
 import { generateSecretKey, getPublicKey } from 'nostr-tools/pure';
 import { NostrKey } from '../NostrKey.js';
 
-import { bytesToHex } from '@noble/hashes/utils';
+const bytesToHex = (bytes: Uint8Array): string =>
+    Array.from(bytes, (byte) => {
+        const hex = byte.toString(16);
+        return hex.length === 1 ? `0${hex}` : hex;
+    }).join('');
 
 export class KeyGenerationService {
     generateKeys(): NostrKey {

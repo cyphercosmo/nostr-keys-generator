@@ -12,6 +12,7 @@ A simple and extensible Nostr key generator
 
 ```bash
 npm i
+npm run test
 npm run generate-nostr-keys
 ```
 
@@ -28,7 +29,13 @@ npm i -g
 nostr-key-generator
 ```
 
-By default the keys will be printed to the console, if you want the command to print the keys as JSON try the command below.
+If you install directly from this repository source, build first:
+
+```bash
+npm run build
+```
+
+By default the keys are printed to the console. To print JSON output:
 
 ```bash
 nostr-key-generator --output json
